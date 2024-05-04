@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ngdemo13/bloc/home_event.dart';
 import 'package:ngdemo13/bloc/home_state.dart';
 
@@ -9,6 +10,7 @@ import '../models/post_model.dart';
 import '../pages/create_page.dart';
 import '../pages/update_page.dart';
 import '../services/http_service.dart';
+import 'create_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   bool isLoading = true;
@@ -53,7 +55,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     bool result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return const CreatePage();
+          return BlocProvider(
+            create: (context) => CreateBloc(),
+            child: const CreatePage(),
+          );
         },
       ),
     );
